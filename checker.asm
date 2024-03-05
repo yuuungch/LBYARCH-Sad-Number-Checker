@@ -2,23 +2,59 @@
 %include "io64.inc"
 
 section .data
-inputChoices db "[1] Y [2] N", 0
-inputContinue db "Do you want to continue? (Y/N): ", 0
+
+inputSadNumber db "Enter a sad number: ", 0
+
+sadNumber db 0
+
+inputChoices db "[1] Y [0] N", 0
+inputContinue db "Do you want to continue? (1/0): ", 0
 continue db 0
 
+printNegative db "Error: negative number detected", 0
+
+printInvalid db "Error: Invalid input", 0
 
 section .text
 global main
-main: 
+main:
+    ; Get Sad Number
+    PRINT_STRING inputSadNumber
+    GET_INT 8, sadNumber
+    PRINT_INT 8, [sadNumber]
+    NEWLINE
+    ; Check if number is negative
+    cmp [sadNumber], 0
+    jl negative_input
+    ; Check if number is an integer or not
+    ; TODO: Implement invalid_input
+    ; jmp invalid_input
 
+    ; If input is valid
+    jmp 
+    jmp prompt:
+    
+prompt:
     ; Ask user if they want to continue
     PRINT_STRING inputChoices
-    PRINT_STRING inputContinue
-    GET_STRING Continue, 1
     NEWLINE
-    mov rax, [Continue]
+    PRINT_STRING inputContinue
+    GET_DEC 8, continue
+    PRINT_DEC 8, [continue]
+    NEWLINE
+    mov rax, [continue]
     cmp rax, 1
     je main
 
     xor rax, rax
     ret
+
+negative_input:
+    PRINT_STRING printNegative
+    NEWLINE
+    jmp main
+
+invalid_input:
+    PRINT_STRING printInvalid
+    NEWLINE
+    jmp main
