@@ -7,7 +7,6 @@ inputSadNumber db "Enter a sad number: ", 0
 
 sadNumber db 0
 
-currentSadNumber db 0
 currentIteration db 0
 
 inputChoices db "[1] Y [0] N", 0
@@ -44,40 +43,53 @@ for_loop:
     cmp rbx, 20
     jge not_sad
     
-    PRINT_STRING "Counter: "
-    PRINT_DEC 8, rbx
-    NEWLINE
-    ; else if currentInteration is 1
+    ; PRINT_STRING "Counter: "
+    ; PRINT_DEC 8, rbx
+    ; NEWLINE
+    
+    ; Else if currentInteration is 1
     cmp qword [currentIteration], 1
     je sad
 
     ; Else
+    
+    ; If Current Number is not 0
     cmp rax, 0
     jne while_loop
 
+    ; Else
     mov rax, [currentIteration]
     mov qword [currentIteration], 0
     
 
 while_loop:
+    ; Divide, acquire quotient and remainder
     mov rcx, 10
     mov rdx, 0
     div rcx
-    PRINT_STRING "Current Quotient: "
-    PRINT_DEC 8, rax
-    NEWLINE
-    PRINT_STRING "Current Remainder: "
-    PRINT_DEC 8, rdx
-    NEWLINE
+    
+    ; PRINT_STRING "Current Quotient: "
+    ; PRINT_DEC 8, rax
+    ; NEWLINE
+    
+    ; PRINT_STRING "Current Remainder: "
+    ; PRINT_DEC 8, rdx
+    ; NEWLINE
+    
     ; Square Remainder
     imul rdx, rdx
-    PRINT_STRING "Current Remainder Squared: "
-    PRINT_DEC 8, rdx
-    NEWLINE
+    
+    ; PRINT_STRING "Current Remainder Squared: "
+    ; PRINT_DEC 8, rdx
+    ; NEWLINE
+    
+    ; Add Squared Remainder to Current Number
     add [currentIteration], rdx
-    PRINT_STRING "Current Digit Squared Sum: "
-    PRINT_DEC 8, [currentIteration]
-    NEWLINE
+    
+    ; PRINT_STRING "Current Digit Squared Sum: "
+    ; PRINT_DEC 8, [currentIteration]
+    ; NEWLINE
+    
     cmp rax, 0
     jne while_loop
     jmp end_of_while
