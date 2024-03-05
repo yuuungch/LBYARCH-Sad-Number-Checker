@@ -34,27 +34,32 @@ main:
     ; jmp invalid_input
 
     ; If input is valid
-    mov rbx, 0 ; serves as counter. Max of 20 iterations
+    mov rbx, 1 ; serves as counter. Max of 20 iterations
     mov rax, [sadNumber] ; move Number
     mov qword [currentIteration], 0
     jmp for_loop
-    jmp prompt
     
 for_loop:
     ; Check if iterations is greater than 20
     cmp rbx, 20
-    jge validate
+    jge not_sad
+    
+    PRINT_STRING "Counter: "
+    PRINT_DEC 8, rbx
+    NEWLINE
+    ; else if currentInteration is 1
+    cmp qword [currentIteration], 1
+    je sad
 
     ; Else
     cmp rax, 0
     jne while_loop
 
-    mov [currentSadNumber], [currentIteration]
+    mov rax, [currentIteration]
+    mov qword [currentIteration], 0
     
-    inc rbx ; increment counter
 
 while_loop:
-    
     mov rcx, 10
     mov rdx, 0
     div rcx
@@ -70,15 +75,25 @@ while_loop:
     PRINT_DEC 8, rdx
     NEWLINE
     add [currentIteration], rdx
+    PRINT_STRING "Current Digit Squared Sum: "
     PRINT_DEC 8, [currentIteration]
     NEWLINE
     cmp rax, 0
     jne while_loop
+    jmp end_of_while
+    
+end_of_while:
+    inc rbx ; increment counter
     jmp for_loop
     
-validate:
 
-
+not_sad:
+    PRINT_STRING "Number is not a sad number"
+    jmp prompt
+    
+sad:
+    PRINT_STRING "Number is a sad number"
+    jmp prompt
 
 prompt:
     ; Ask user if they want to continue
