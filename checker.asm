@@ -7,6 +7,9 @@ inputSadNumber db "Enter a sad number: ", 0
 
 sadNumber db 0
 
+currentSadNumber db 0
+currentIteration db 0
+
 inputChoices db "[1] Y [0] N", 0
 inputContinue db "Do you want to continue? (1/0): ", 0
 continue db 0
@@ -20,20 +23,63 @@ global main
 main:
     ; Get Sad Number
     PRINT_STRING inputSadNumber
-    GET_INT 8, sadNumber
-    PRINT_INT 8, [sadNumber]
+    GET_DEC 8, sadNumber
+    PRINT_DEC 8, [sadNumber]
     NEWLINE
     ; Check if number is negative
-    cmp [sadNumber], 0
+    cmp qword [sadNumber], 0
     jl negative_input
     ; Check if number is an integer or not
     ; TODO: Implement invalid_input
     ; jmp invalid_input
 
     ; If input is valid
-    jmp 
-    jmp prompt:
+    mov rbx, 0 ; serves as counter. Max of 20 iterations
+    mov rax, [sadNumber] ; move Number
+    mov qword [currentIteration], 0
+    jmp for_loop
+    jmp prompt
     
+for_loop:
+    ; Check if iterations is greater than 20
+    cmp rbx, 20
+    jge validate
+
+    ; Else
+    cmp rax, 0
+    jne while_loop
+
+    mov [currentSadNumber], [currentIteration]
+    
+    inc rbx ; increment counter
+
+while_loop:
+    
+    mov rcx, 10
+    mov rdx, 0
+    div rcx
+    PRINT_STRING "Current Quotient: "
+    PRINT_DEC 8, rax
+    NEWLINE
+    PRINT_STRING "Current Remainder: "
+    PRINT_DEC 8, rdx
+    NEWLINE
+    ; Square Remainder
+    imul rdx, rdx
+    PRINT_STRING "Current Remainder Squared: "
+    PRINT_DEC 8, rdx
+    NEWLINE
+    add [currentIteration], rdx
+    PRINT_DEC 8, [currentIteration]
+    NEWLINE
+    cmp rax, 0
+    jne while_loop
+    jmp for_loop
+    
+validate:
+
+
+
 prompt:
     ; Ask user if they want to continue
     PRINT_STRING inputChoices
