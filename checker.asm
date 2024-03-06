@@ -5,12 +5,13 @@ section .data
 
 inputSadNumber db "Enter a sad number: ", 0
 
-inputContinue db "Do you want to continue? (1/0): ", 0
+inputContinue db "Do you want to continue? (Y/N): ", 0
 
 printNegative db "Error: negative number detected", 0
 
 printInvalid db "Error: Invalid input", 0
 
+charEnterHolder db 0
 continue db 0
 sadNumber db 0
 currentIteration db 0
@@ -110,13 +111,22 @@ sad:
 prompt:
     ; Ask user if they want to continue
     PRINT_STRING inputContinue
-    GET_DEC 8, continue
-    PRINT_DEC 8, [continue]
+    ; Store Enter key to charEnterHolder
+    GET_CHAR charEnterHolder
+    GET_CHAR continue
+    PRINT_CHAR [continue]
     NEWLINE
-    mov rax, [continue]
-    cmp rax, 1
+    mov al, [continue]
+    ; Check if input is valid (only Y or N)
+    cmp al, 'Y'
     je main
+    cmp al, 'N'
+    je end_program
+    
+    ; If input is invalid
+    jmp invalid_input_choice
 
+end_program: 
     xor rax, rax
     ret
 
@@ -129,3 +139,8 @@ invalid_input:
     PRINT_STRING printInvalid
     NEWLINE
     jmp main
+
+invalid_input_choice:
+    PRINT_STRING printInvalid
+    NEWLINE
+    jmp prompt
