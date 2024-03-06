@@ -3,24 +3,24 @@
 
 section .data
 
-inputSadNumber db "Enter a sad number: ", 0
+inputSadNumberPrompt dq "Enter a sad number: ", 0
 
-inputContinue db "Do you want to continue? (Y/N): ", 0
+inputContinuePrompt dq "Do you want to continue? (Y/N): ", 0
 
-printNegative db "Error: negative number detected", 0
+printNegative dq "Error: negative number detected", 0
 
-printInvalid db "Error: Invalid input", 0
+printInvalid dq "Error: Invalid input", 0
 
-charEnterHolder db 0
-continue db 0
-sadNumber db 0
-currentIteration db 0
+charEnterHolder dq 0
+continue dq 0
+sadNumber dq 0
+currentIteration dq 0
 
 section .text
 global main
 main:
     ; Get Sad Number
-    PRINT_STRING inputSadNumber
+    PRINT_STRING inputSadNumberPrompt
     GET_DEC 8, sadNumber
     PRINT_DEC 8, [sadNumber]
     NEWLINE
@@ -28,8 +28,7 @@ main:
     cmp qword [sadNumber], 0
     jl negative_input
     ; Check if number is an integer or not
-    ; TODO: Implement invalid_input
-    ; jmp invalid_input
+    ; TODO: implement invalid input check
 
     ; If input is valid
     mov rbx, 1 ; serves as counter. Max of 20 iterations
@@ -110,7 +109,7 @@ sad:
 
 prompt:
     ; Ask user if they want to continue
-    PRINT_STRING inputContinue
+    PRINT_STRING inputContinuePrompt
     ; Store Enter key to charEnterHolder
     GET_CHAR charEnterHolder
     GET_CHAR continue
