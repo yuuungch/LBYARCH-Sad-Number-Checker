@@ -7,6 +7,8 @@ Checks if a number is a "Sad" Number (if the iteration of sum-of-square-digits w
 - Program Restart Inputs will also accept Y's or N's that are part of invalid string inputs.
 
 ## Sample Outputs of Latest Version:
-Sample 1:\![image](https://github.com/yuuungch/LBYARCH-Sad-Number-Checker/assets/105798512/6aaa1a9c-47d7-4eaa-8877-ee86bc40e8f5)
+Sample 1:\
+![image](https://github.com/yuuungch/LBYARCH-Sad-Number-Checker/assets/105798512/6aaa1a9c-47d7-4eaa-8877-ee86bc40e8f5)
 
-Sample 2:\![image](https://github.com/yuuungch/LBYARCH-Sad-Number-Checker/assets/105798512/eecd05ca-6423-432b-a192-bdaca4cc000e)
+Sample 2:\
+![image](https://github.com/yuuungch/LBYARCH-Sad-Number-Checker/assets/105798512/eecd05ca-6423-432b-a192-bdaca4cc000e)
