@@ -11,7 +11,7 @@ printNegative dq "Error: negative number detected", 0
 
 printInvalid dq "Error: Invalid input", 0
 
-charEnterHolder dq 0
+charEnterBurner dq 0
 continue dq 0
 sadNumber dq 0
 currentIteration dq 0
@@ -22,6 +22,7 @@ main:
     ; Get Sad Number
     PRINT_STRING inputSadNumberPrompt
     GET_DEC 8, sadNumber
+    GET_CHAR charEnterBurner
     PRINT_DEC 8, [sadNumber]
     NEWLINE
     ; Check if number is negative
@@ -110,9 +111,17 @@ sad:
 prompt:
     ; Ask user if they want to continue
     PRINT_STRING inputContinuePrompt
-    ; Store Enter key to charEnterHolder
-    GET_CHAR charEnterHolder
     GET_CHAR continue
+    ; Check if next character is a newline
+    cmp qword [continue], 0x0A
+    je burn_newline
+    jmp prompt_continue
+    
+burn_newline:
+    GET_CHAR continue
+    jmp prompt_continue
+    
+prompt_continue:
     PRINT_CHAR [continue]
     NEWLINE
     mov al, [continue]
