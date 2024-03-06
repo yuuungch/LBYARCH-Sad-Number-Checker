@@ -9,7 +9,7 @@ inputContinuePrompt dq "Do you want to continue? (Y/N): ", 0
 
 printIterations dq "Iterations: ", 0
 
-printNegative dq "Error: negative number detected", 0
+printNegative dq "Error: negative number input", 0
 
 printInvalid dq "Error: Invalid input", 0
 
@@ -38,6 +38,8 @@ main:
     mov rax, [sadNumber] ; move Number
     mov qword [currentIteration], 0
     PRINT_STRING printIterations
+    PRINT_DEC 8, rax
+    PRINT_STRING ", "
     jmp for_loop
     
 for_loop:
