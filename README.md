@@ -11,4 +11,5 @@ Sample 1:\
 ![image](https://github.com/yuuungch/LBYARCH-Sad-Number-Checker/assets/105798512/6aaa1a9c-47d7-4eaa-8877-ee86bc40e8f5)
 
 Sample 2:\
-![image](https://github.com/yuuungch/LBYARCH-Sad-Number-Checker/assets/105798512/eecd05ca-6423-432b-a192-bdaca4cc000e)
+![image](https://github.com/yuuungch/LBYARCH-Sad-Number-Checker/assets/105798512/089dd991-76ad-4e17-890e-76b09af295e7)
+
