@@ -5,17 +5,15 @@ section .data
 
 inputSadNumber db "Enter a sad number: ", 0
 
-sadNumber db 0
-
-currentIteration db 0
-
-inputChoices db "[1] Y [0] N", 0
 inputContinue db "Do you want to continue? (1/0): ", 0
-continue db 0
 
 printNegative db "Error: negative number detected", 0
 
 printInvalid db "Error: Invalid input", 0
+
+continue db 0
+sadNumber db 0
+currentIteration db 0
 
 section .text
 global main
@@ -100,17 +98,17 @@ end_of_while:
     
 
 not_sad:
-    PRINT_STRING "Number is not a sad number"
+    PRINT_STRING "Sad Number: No"
+    NEWLINE
     jmp prompt
     
 sad:
-    PRINT_STRING "Number is a sad number"
+    PRINT_STRING "Sad Number: Yes"
+    NEWLINE
     jmp prompt
 
 prompt:
     ; Ask user if they want to continue
-    PRINT_STRING inputChoices
-    NEWLINE
     PRINT_STRING inputContinue
     GET_DEC 8, continue
     PRINT_DEC 8, [continue]
