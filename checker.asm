@@ -7,6 +7,8 @@ inputSadNumberPrompt dq "Enter a sad number: ", 0
 
 inputContinuePrompt dq "Do you want to continue? (Y/N): ", 0
 
+printIterations dq "Iterations: ", 0
+
 printNegative dq "Error: negative number detected", 0
 
 printInvalid dq "Error: Invalid input", 0
@@ -35,6 +37,7 @@ main:
     mov rbx, 1 ; serves as counter. Max of 20 iterations
     mov rax, [sadNumber] ; move Number
     mov qword [currentIteration], 0
+    PRINT_STRING printIterations
     jmp for_loop
     
 for_loop:
@@ -94,16 +97,30 @@ while_loop:
     jmp end_of_while
     
 end_of_while:
+    PRINT_DEC 8, [currentIteration]
+    cmp qword [currentIteration], 1
+    jne print_comma
+
     inc rbx ; increment counter
+    jmp for_loop
+
+print_comma:
+    inc rbx ; increment counter
+    cmp rbx, 20
+    je for_loop
+
+    PRINT_STRING ", "
     jmp for_loop
     
 
 not_sad:
+    NEWLINE
     PRINT_STRING "Sad Number: No"
     NEWLINE
     jmp prompt
     
 sad:
+    NEWLINE
     PRINT_STRING "Sad Number: Yes"
     NEWLINE
     jmp prompt
