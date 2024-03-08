@@ -38,8 +38,8 @@ main:
     mov rax, [sadNumber] ; move Number
     mov qword [currentIteration], 0
     PRINT_STRING printIterations
-    ; PRINT_DEC 8, rax
-    ; PRINT_STRING ", "
+    PRINT_DEC 8, rax
+    PRINT_STRING ", "
     jmp for_loop
     
 for_loop:
