@@ -15,32 +15,41 @@ printInvalid dq "Error: Invalid input", 0
 
 printTerminate dq "Enter any key to exit...", 0
 
+
 charEnterBurner dq 0
 invalid dq 0
 continue dq 0
 sadNumber dq 0
+previousSadNumber dq 0
 currentIteration dq 0
 
 section .text
 global main
 main:
     ; Get Sad Number
-    mov qword [sadNumber], 0
-    mov rax, 0
+    call reset_variables
     PRINT_STRING inputSadNumberPrompt
     GET_DEC 8, [sadNumber]
+    GET_CHAR charEnterBurner
     ; Check if number is negative
     cmp qword [sadNumber], 0
     jl negative_input
     ; Check if number is an integer or not
+    cmp qword [charEnterBurner], 0xA
+    jne invalid_input
+    
+    ; If current sad number is same as previous
+    mov rax, [previousSadNumber]
+    cmp qword [sadNumber], rax
     je invalid_input
 
     ; If input is valid
-    GET_CHAR charEnterBurner
+    
     ; PRINT_DEC 8, [sadNumber]
     NEWLINE
     mov rbx, 1 ; serves as counter. Max of 20 iterations
     mov rax, [sadNumber] ; move Number
+    mov [previousSadNumber], rax
     mov qword [currentIteration], 0
     PRINT_STRING printIterations
     PRINT_DEC 8, rax
@@ -124,17 +133,19 @@ not_sad:
     NEWLINE
     PRINT_STRING "Sad Number: No"
     NEWLINE
+    call reset_variables
     jmp prompt
     
 sad:
     NEWLINE
     PRINT_STRING "Sad Number: Yes"
     NEWLINE
+    call reset_variables
     jmp prompt
 
 prompt:
     ; Ask user if they want to continue
-    mov qword [sadNumber], 0
+    call reset_variables
     PRINT_STRING inputContinuePrompt
     GET_CHAR [continue]
     ; Check if next character is a newline
@@ -147,13 +158,14 @@ burn_newline:
     jmp prompt_continue
     
 prompt_continue:
+    call reset_variables
+    
     ; PRINT_CHAR [continue]
-    ; NEWLINE
-    mov al, [continue]
+    NEWLINE
     ; Check if input is valid (only Y or N)
-    cmp al, 'Y'
+    cmp qword [continue], 'Y'
     je main
-    cmp al, 'N'
+    cmp qword [continue], 'N'
     je end_program
     
     ; If input is invalid
@@ -168,7 +180,7 @@ end_program:
     ret
 
 negative_input:
-    PRINT_DEC 8, [sadNumber]
+    ; PRINT_DEC 8, [sadNumber]
     NEWLINE
     PRINT_STRING printNegative
     NEWLINE
@@ -177,10 +189,10 @@ negative_input:
 invalid_input:
     burn_characters:
         GET_CHAR [invalid]
-        PRINT_CHAR [invalid]
+        ; PRINT_CHAR [invalid]
+        NEWLINE
         cmp qword [invalid], 0xA
         jne burn_characters
-    call reset_variables
     PRINT_STRING printInvalid
     NEWLINE
     jmp prompt
@@ -188,6 +200,7 @@ invalid_input:
 reset_variables:
     mov qword [sadNumber], 0
     mov rax, 0
+    ret
     
 
 invalid_input_choice:
