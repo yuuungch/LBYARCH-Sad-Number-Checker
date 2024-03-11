@@ -172,7 +172,6 @@ prompt_continue:
     jmp invalid_input_choice
 
 end_program: 
-    NEWLINE
     GET_CHAR [charEnterBurner]
     PRINT_STRING printTerminate
     GET_CHAR [charEnterBurner]
@@ -190,9 +189,10 @@ invalid_input:
     burn_characters:
         GET_CHAR [invalid]
         ; PRINT_CHAR [invalid]
-        NEWLINE
+        
         cmp qword [invalid], 0xA
         jne burn_characters
+    NEWLINE
     PRINT_STRING printInvalid
     NEWLINE
     jmp prompt
