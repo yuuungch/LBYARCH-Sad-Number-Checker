@@ -9,5 +9,5 @@ Sample 2:\
 ![image](https://github.com/yuuungch/LBYARCH-Sad-Number-Checker/assets/105798512/089dd991-76ad-4e17-890e-76b09af295e7)
 
 Sample 3:\
-![image]()
+![image](![image](https://github.com/yuuungch/LBYARCH-Sad-Number-Checker/assets/105798512/23084ccb-7402-484d-8bb8-0c9c75246bdb)
 
