@@ -45,7 +45,7 @@ main:
 
     ; If input is valid
     
-    ; PRINT_DEC 8, [sadNumber]
+    PRINT_DEC 8, [sadNumber]
     NEWLINE
     mov rbx, 1 ; serves as counter. Max of 20 iterations
     mov rax, [sadNumber] ; move Number
@@ -186,9 +186,10 @@ negative_input:
     jmp prompt
     
 invalid_input:
+    ; PRINT_CHAR charEnterBurner
     burn_characters:
         GET_CHAR [invalid]
-        ; PRINT_CHAR [invalid]
+        PRINT_CHAR [invalid]
         
         cmp qword [invalid], 0xA
         jne burn_characters
