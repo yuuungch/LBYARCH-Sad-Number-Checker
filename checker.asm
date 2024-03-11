@@ -13,6 +13,8 @@ printNegative dq "Error: negative number input", 0
 
 printInvalid dq "Error: Invalid input", 0
 
+printTerminate dq "Enter any key to exit...", 0
+
 charEnterBurner dq 0
 continue dq 0
 sadNumber dq 0
@@ -154,6 +156,9 @@ prompt_continue:
     jmp invalid_input_choice
 
 end_program: 
+    NEWLINE
+    PRINT_STRING printTerminate
+    GET_CHAR charEnterBurner
     xor rax, rax
     ret
 
